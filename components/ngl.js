@@ -3,7 +3,7 @@ import { Stage, Component } from "react-ngl";
 import { useMemo, useState, useCallback, useEffect } from "react";
 import { Flex, Select } from "@chakra-ui/react";
 
-export default function s({ path }) {
+export default function Ngl({ path }) {
   const [reprName, setReprName] = useState("cartoon");
 
   const reprLists = useMemo(

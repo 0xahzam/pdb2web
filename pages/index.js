@@ -10,11 +10,12 @@ const Structure = dynamic(
   },
   { ssr: false }
 );
-export default function index() {
+
+export default function Index() {
   const [fileImg, setFileImg] = useState(null); // storing file data
 
   const [fileContent, setFileContent] = useState("");
-  const [fasta, setFasta] = useState(null); // storing file data
+  const [fasta, setFasta] = useState(""); // storing file data
 
   function handleFileRead(e) {
     const content = e.target.result;
@@ -72,8 +73,12 @@ export default function index() {
         fastaText += "\n";
       }
     }
-    return fastaText;
+    setFasta(fastaText);
   };
+
+  useEffect(() => {
+    pdbToFASTA(fileContent);
+  }, [fileContent]);
 
   return (
     <Flex
@@ -101,9 +106,11 @@ export default function index() {
             initial={{ y: "10%", opacity: "0" }}
             animate={{ y: "0", opacity: "100%" }}
             transition={{ delay: "0.35" }}
-            >
-            <Structure path={fileImg} />
-            <Text w={"610px"}>{pdbToFASTA(fileContent)}</Text>
+          >
+            <Flex flexDir={"column"} gap={"10px"}>
+              <Structure path={fileImg} />
+              <Text w={"610px"}>{fasta}</Text>
+            </Flex>
           </motion.div>
         )}
       </Flex>
