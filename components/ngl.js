@@ -1,6 +1,8 @@
 import React from "react";
 import { Stage, Component } from "react-ngl";
 import { useMemo, useState, useCallback } from "react";
+import { Flex, Select } from "@chakra-ui/react";
+
 export default function s({ path }) {
   const [reprName, setReprName] = useState("cartoon");
   const reprLists = useMemo(
@@ -55,20 +57,31 @@ export default function s({ path }) {
 
   return (
     <>
-      <Stage width="600px" height="400px">
-        <Component path={path} reprList={reprLists[reprName]} />
-      </Stage>
-      <select
-        name="representation"
-        value={reprName}
-        onChange={handleReprChange}
+      <Flex
+        width={"610px"}
+        bg={"black"}
+        flexDir={"column"}
+        borderRadius={"7px"}
+        align={"center"}
+        color={"white"}
       >
-        {Object.keys(reprLists).map((name) => (
-          <option key={name} value={name}>
-            {name}
-          </option>
-        ))}
-      </select>
+        <Stage width="600px" height="400px">
+          <Component path={path} reprList={reprLists[reprName]} />
+        </Stage>
+
+        <Select
+          name="representation"
+          value={reprName}
+          onChange={handleReprChange}
+          border={"none"}
+        >
+          {Object.keys(reprLists).map((name) => (
+            <option key={name} value={name}>
+              {name}
+            </option>
+          ))}
+        </Select>
+      </Flex>
     </>
   );
 }

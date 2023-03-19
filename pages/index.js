@@ -1,7 +1,7 @@
 import React from "react";
 import dynamic from "next/dynamic";
 import { useState, useEffect } from "react";
-import ReactFileReader from "react-file-reader";
+import { Flex, Text, Input } from "@chakra-ui/react";
 
 const Structure = dynamic(
   () => {
@@ -75,23 +75,33 @@ export default function index() {
   };
 
   return (
-    <div>
-      input a file <br />
-      <input
-        id="myBtn"
-        type="file"
-        onChange={(e) => handleFileChosen(e.target.files[0])}
-        accept=".pdb"
-      />
-      {/* <button onClick={pdbToFASTA(fileImg)} /> */}
-      {fileImg == null ? (
-        ""
-      ) : (
-        <>
-          <Structure path={fileImg} />
-          <p>{pdbToFASTA(fileContent)}</p>
-        </>
-      )}
-    </div>
+    <Flex
+      minH={"100vh"}
+      align={"center"}
+      bg={"white"}
+      color={"black"}
+      flexDir={"column"}
+      justify={"center"}
+    >
+      <Flex flexDir={"column"} gap={"10px"}>
+        <Flex flexDir={"column"} gap={"5px"}>
+          <Text fontSize={"19px"}>Input a file</Text>
+          <input
+            id="myBtn"
+            type="file"
+            onChange={(e) => handleFileChosen(e.target.files[0])}
+            accept=".pdb"
+          />
+        </Flex>
+        {fileImg == null ? (
+          ""
+        ) : (
+          <>
+            <Structure path={fileImg} />
+            <Text w={"610px"}>{pdbToFASTA(fileContent)}</Text>
+          </>
+        )}
+      </Flex>
+    </Flex>
   );
 }
