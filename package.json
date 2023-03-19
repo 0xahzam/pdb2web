@@ -10,8 +10,10 @@
   },
   "dependencies": {
     "next": "13.2.4",
+    "ngl": "^2.1.0",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "react-ngl": "^0.2.3"
   },
   "devDependencies": {
     "eslint": "8.36.0",
