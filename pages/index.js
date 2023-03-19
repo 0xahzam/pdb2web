@@ -2,6 +2,7 @@ import React from "react";
 import dynamic from "next/dynamic";
 import { useState, useEffect } from "react";
 import { Flex, Text, Input } from "@chakra-ui/react";
+import { motion } from "framer-motion";
 
 const Structure = dynamic(
   () => {
@@ -96,10 +97,14 @@ export default function index() {
         {fileImg == null ? (
           ""
         ) : (
-          <>
+          <motion.div
+            initial={{ y: "10%", opacity: "0" }}
+            animate={{ y: "0", opacity: "100%" }}
+            transition={{ delay: "0.35" }}
+          >
             <Structure path={fileImg} />
             <Text w={"610px"}>{pdbToFASTA(fileContent)}</Text>
-          </>
+          </motion.div>
         )}
       </Flex>
     </Flex>
