@@ -85,8 +85,8 @@ export default function index() {
       justify={"center"}
     >
       <Flex flexDir={"column"} gap={"10px"} mt={"40px"} mb={"40px"}>
-        <Flex flexDir={"column"} gap={"5px"}>
-          <Text fontSize={"19px"}>Input a file</Text>
+        <Flex flexDir={"column"} gap={"10px"}>
+          <Text fontSize={"24px"}>pdb2web🧬</Text>
           <input
             id="myBtn"
             type="file"
