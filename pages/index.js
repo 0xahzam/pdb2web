@@ -84,7 +84,7 @@ export default function index() {
       flexDir={"column"}
       justify={"center"}
     >
-      <Flex flexDir={"column"} gap={"10px"}>
+      <Flex flexDir={"column"} gap={"10px"} mt={"40px"} mb={"40px"}>
         <Flex flexDir={"column"} gap={"5px"}>
           <Text fontSize={"19px"}>Input a file</Text>
           <input
@@ -101,7 +101,7 @@ export default function index() {
             initial={{ y: "10%", opacity: "0" }}
             animate={{ y: "0", opacity: "100%" }}
             transition={{ delay: "0.35" }}
-          >
+            >
             <Structure path={fileImg} />
             <Text w={"610px"}>{pdbToFASTA(fileContent)}</Text>
           </motion.div>
