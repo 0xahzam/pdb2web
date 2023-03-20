@@ -1,7 +1,7 @@
 # Pdb2Web 
 
 ## 🧬Background
-Just a weekend hack which takes protein data bank (pdb) files as input and display 3d structure and protein fasta sequence
+Just a weekend hack which takes protein data bank (pdb) files as input and display 3d structure and protein fasta sequence as output.
 
 ## ⚒ Want to run yourself?
 This is a [Next.js](https://nextjs.org/) project.
