@@ -64,7 +64,7 @@ export default function Ngl({ path }) {
         bg={"black"}
         flexDir={"column"}
         borderRadius={"7px"}
-        align={"center"}
+        // align={"center"}
         color={"white"}
       >
         <Stage width="600px" height="400px">
