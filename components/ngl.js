@@ -16,6 +16,10 @@ export default function Ngl({ path }) {
       cartoon: [
         {
           type: "cartoon",
+          param: {
+            color: "red", // color for the representation
+            sele: ":10-200", // atom selection (in this case, atoms 10-20)
+          },
         },
       ],
       "ribbon and line": [

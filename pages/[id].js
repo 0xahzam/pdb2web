@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Flex, Spinner, Text, Button, Input } from "@chakra-ui/react";
 import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
-
+import { useMemo } from "react";
 import {
   Drawer,
   DrawerBody,
@@ -18,6 +18,13 @@ import {
 const Structure = dynamic(
   () => {
     return import("../components/ngl");
+  },
+  { ssr: false }
+);
+
+const StructureCol = dynamic(
+  () => {
+    return import("../components/ngl2");
   },
   { ssr: false }
 );
@@ -41,6 +48,8 @@ export default function Protein() {
   const [fileContent, setFileContent] = useState("");
 
   const [fasta, setFasta] = useState("");
+  const [pdb, setPdb] = useState("");
+
   const [flag, setFlag] = useState(false);
   const [tempselectedText, setTempselectedText] = useState("");
   const [tempselectedColor, setTempselectedColor] = useState("");
@@ -205,27 +214,51 @@ export default function Protein() {
         >
           <Flex flexDir={"column"} gap={"10px"}>
             <Text fontSize={"24px"}>pdb2web🧬</Text>
-
             <motion.div
               initial={{ y: "10%", opacity: "0" }}
               animate={{ y: "0", opacity: "100%" }}
               transition={{ delay: "0.35" }}
             >
-              <Flex flexDir={"column"} gap={"10px"}>
-                <Structure path={fileUrl} />
-                <Button onClick={onOpen}>Annotate</Button>
-                {flag ? (
+              {flag ? (
+                <Flex flexDir={"column"} gap={"10px"}>
+                  <StructureCol
+                    path={fileUrl}
+                    color={tempselectedColor}
+                    substr={tempselectedText}
+                    str={fasta}
+                  />
+
+                  <Button onClick={onOpen}>Annotate</Button>
+
                   <Text w={"610px"}>
-                    {fasta.split(tempselectedText)[0]}
-                    <span style={{ color: tempselectedColor }}>
-                      {tempselectedText}
-                    </span>
-                    {fasta.split(tempselectedText)[1]}
+                    {(() => {
+                      const index = fasta.indexOf(tempselectedText);
+                      const before = fasta.slice(0, index);
+                      const after = fasta.slice(
+                        index + tempselectedText.length
+                      );
+
+                      const s = before + tempselectedText + after;
+
+                      return (
+                        <span>
+                          {before}
+                          <span style={{ color: tempselectedColor }}>
+                            {tempselectedText}
+                          </span>
+                          {after}
+                        </span>
+                      );
+                    })()}
                   </Text>
-                ) : (
+                </Flex>
+              ) : (
+                <Flex flexDir={"column"} gap={"10px"}>
+                  <Structure path={fileUrl} />
+                  <Button onClick={onOpen}>Annotate</Button>
                   <Text w={"610px"}>{fasta}</Text>
-                )}
-              </Flex>
+                </Flex>
+              )}
             </motion.div>
           </Flex>
 
@@ -233,7 +266,15 @@ export default function Protein() {
             <Text fontSize={"21px"} onClick={getUsers} cursor={"pointer"}>
               Annotation History ⏳ (click to load)
             </Text>
-
+            <hr />
+            <Text
+              fontSize={"19px"}
+              onClick={() => setFlag(false)}
+              cursor={"pointer"}
+            >
+              Reset ↺
+            </Text>
+            <hr />
             {userArr.map((item) => (
               <Flex
                 key={item.id}
@@ -254,7 +295,7 @@ export default function Protein() {
                 cursor={"pointer"}
               >
                 <Flex gap={"10px"} align={"center"}>
-                  <Text fontSize={"19px"}> 1. {item.username}</Text>
+                  <Text fontSize={"19px"}> → {item.username}</Text>
                   <Flex height={"20px"} width={"100px"} bg={`${item.color}`} />
                 </Flex>
                 <Text w={"400px"}>{item.selection}</Text>
