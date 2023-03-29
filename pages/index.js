@@ -12,28 +12,51 @@ export default function Index() {
 
   const [flag, setFlag] = useState(false);
 
-  async function uploadPdbToDb(pdbData) {
-    const data = { pdb: pdbData };
+  function generateRandomId() {
+    const length = 10;
+    const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    let result = "";
+    for (let i = 0; i < length; i++) {
+      result += characters.charAt(
+        Math.floor(Math.random() * characters.length)
+      );
+    }
+    return result;
+  }
+
+  function generateId() {
+    const length = 10;
+    const characters = "0123456789";
+    let result = "";
+    for (let i = 0; i < length; i++) {
+      result += characters.charAt(
+        Math.floor(Math.random() * characters.length)
+      );
+    }
+    return result;
+  }
+
+  async function uploadPdbToDb(id, pdb, randomStr) {
     try {
       const response = await fetch("/api/addPdb", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify({
+          id,
+          pdb,
+          randomStr,
+        }),
       });
       const result = await response.json();
-      setRoute(result.randomStr);
+      setRoute(randomStr);
       console.log("Success:", result);
       setFlag(true);
     } catch (error) {
       console.error("Error:", error);
       return null;
     }
-  }
-
-  async function moveRoute(data) {
-    uploadPdbToDb(data);
   }
 
   useEffect(() => {
@@ -61,7 +84,7 @@ export default function Index() {
           />
           <Button
             onClick={() => {
-              moveRoute(fileUrl);
+              uploadPdbToDb(generateId(), fileUrl, generateRandomId());
             }}
           >
             submit

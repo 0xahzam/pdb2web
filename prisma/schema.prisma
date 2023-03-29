@@ -1,23 +1,20 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
 
 generator client {
   provider = "prisma-client-js"
 }
 
-datasource db {
-  provider = "sqlite"
-  url      = env("DATABASE_URL")
-}
-
 model pdbCollection {
-  id        Int    @id @default(autoincrement())
-  randomStr String @unique @default(dbgenerated("(hex(randomblob(5)) || hex(randomblob(5)))"))
+  id        Int    @id @map("_id")
+  randomStr String
   pdb       String
 }
 
 model user {
-  id        Int    @id @default(autoincrement())
+  id        Int    @id @map("_id")
   username  String
   color     String
   selection String

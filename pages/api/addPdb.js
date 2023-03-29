@@ -2,12 +2,13 @@ import prisma from "../../prisma/script";
 
 export default async function handler(req, res) {
   if (req.method === "POST") {
-    const { pdb } = req.body;
-
+    const { id, pdb, randomStr } = req.body;
     try {
       const newPdbCollection = await prisma.pdbCollection.create({
         data: {
-          pdb,
+          id: parseInt(id, 10),
+          pdb: pdb,
+          randomStr: randomStr,
         },
       });
       res.status(201).json(newPdbCollection);

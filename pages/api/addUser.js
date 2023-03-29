@@ -2,11 +2,12 @@ import prisma from "../../prisma/script";
 
 export default async function handler(req, res) {
   if (req.method === "POST") {
-    const { username, color, selection, randSt } = req.body;
+    const { id, username, color, selection, randSt } = req.body;
 
     try {
       const newUser = await prisma.user.create({
         data: {
+          id: parseInt(id, 10),
           username: username,
           color: color,
           selection: selection,

@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { Flex, Spinner, Text, Button, Input } from "@chakra-ui/react";
 import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
-import { useMemo } from "react";
 import {
   Drawer,
   DrawerBody,
@@ -168,7 +167,20 @@ export default function Protein() {
     pdbToFASTA(text);
   }
 
-  async function UserToDb(username, color, selection, randSt) {
+  function generateId() {
+    const length = 10;
+    const characters = "0123456789";
+    let result = "";
+    for (let i = 0; i < length; i++) {
+      result += characters.charAt(
+        Math.floor(Math.random() * characters.length)
+      );
+    }
+    return result;
+  }
+
+  async function UserToDb(id, username, color, selection, randSt) {
+    console.log("This is id", id);
     try {
       const response = await fetch("/api/addUser", {
         method: "POST",
@@ -176,6 +188,7 @@ export default function Protein() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
+          id,
           username,
           color,
           selection,
@@ -351,13 +364,13 @@ export default function Protein() {
                 <Button
                   mt={"20px"}
                   onClick={() => {
-                    // let data = {
-                    //   username: name,
-                    //   color: selectedColor,
-                    //   selection: selectedText,
-                    //   randSt: id,
-                    // };
-                    UserToDb(name, selectedColor, selectedText, id);
+                    UserToDb(
+                      generateId(),
+                      name,
+                      selectedColor,
+                      selectedText,
+                      id
+                    );
                     onClose();
                   }}
                 >
