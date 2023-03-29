@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Stage, ColormakerRegistry } from "ngl";
 
 export default function NglViewer({ path, color, substr, str }) {
